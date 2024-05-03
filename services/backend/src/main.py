@@ -47,6 +47,7 @@ fastapi.add_middleware(
 # Module Routes
 fastapi.include_router(event_router)
 
+# Root Route
 @fastapi.get(path="/", response_model=dict[str, str])
 async def root(settings: Settings = Depends(get_settings)):
     return {

@@ -29,7 +29,7 @@ async def get_postgres_session() -> AsyncGenerator[AsyncSession, Any]:
         CRUD operations
     """
     async_session = sessionmaker(
-        async_engine, 
+        bind=async_engine, 
         class_=AsyncSession, 
         expire_on_commit=False
     )
