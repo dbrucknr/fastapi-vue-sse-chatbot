@@ -14,6 +14,7 @@ fastapi = FastAPI(
         Proof of concept that enables a client to subscribe to the /subscribe endpoint 
         and see real-time updates broadcast when redis is changed.
     """
+    # lifespan=
 )
 
 # Middlewares

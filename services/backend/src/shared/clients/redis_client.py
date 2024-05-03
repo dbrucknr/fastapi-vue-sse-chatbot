@@ -1,10 +1,10 @@
 from redis.asyncio.client import Redis, ConnectionError
 
 # Create Redis connection client
-async def redis_client():
+async def redis_client() -> Redis:
     try:
         return await Redis.from_url(
-            f"redis://localhost:6379",
+            f"redis://redis:6379/0",
             encoding="utf8", 
             decode_responses=True
         )
