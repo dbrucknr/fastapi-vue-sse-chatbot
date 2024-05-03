@@ -9,3 +9,7 @@
 ## Frontend
 - Start App (dev) - make sure you're in correct folder: `npm run dev`
 - To Create: `npm create vite@latest`
+
+## Database
+- To inspect: `docker compose exec db psql --username=postgres --dbname=postgres`
+- `\dt`

@@ -11,6 +11,7 @@ from starlette.middleware.sessions import SessionMiddleware
 from src.settings import get_settings, Settings
 from src.shared import initialize_postgres
 from src.modules.events import event_router
+from src.modules import * # SQL Models
 
 # Lifespan Events
 @asynccontextmanager
