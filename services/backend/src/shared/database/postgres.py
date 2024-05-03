@@ -1,8 +1,5 @@
-# Typing
+# Python Dependencies
 from typing import Any, AsyncGenerator
-
-# FastAPI
-from fastapi import Depends
 
 # SQLModel
 from sqlmodel import SQLModel
@@ -10,28 +7,27 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 
 # SQLAlchemy
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncEngine
+from sqlalchemy.ext.asyncio import create_async_engine
 
 # Local Dependencies
-from src.settings import get_settings, Settings
+from src.settings import get_settings
 
-def build_async_engine(
-    settings: Settings = Depends(get_settings)
-) -> AsyncEngine:
-    return create_async_engine(
-        settings.database_url, echo=True, future=True
-    )
+async_engine = create_async_engine(
+    url=get_settings().database_url, 
+    echo=True, 
+    future=True
+)
 
-async def initialize_postgres(
-    async_engine: AsyncEngine = Depends(build_async_engine)
-) -> None:
+async def initialize_postgres() -> None:
+    """Create all Module Tables (must be imported in same file)"""
     async with async_engine.begin() as connection:
         await connection.run_sync(SQLModel.metadata.create_all)
 
-async def get_postgres_session(
-    async_engine: AsyncEngine = Depends(build_async_engine)
-) -> AsyncGenerator[AsyncSession, Any]:
-    
+async def get_postgres_session() -> AsyncGenerator[AsyncSession, Any]:
+    """
+        Access the established Postgres Session Connection to perform 
+        CRUD operations
+    """
     async_session = sessionmaker(
         async_engine, 
         class_=AsyncSession, 
