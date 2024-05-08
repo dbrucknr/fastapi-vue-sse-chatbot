@@ -10,6 +10,9 @@ from openai import AsyncOpenAI
 # Local Dependencies
 from src.settings import get_settings, Settings
 
+###############################################################################
+# OpenAI Client
+###############################################################################
 def openai_client(
     settings: Settings = Depends(get_settings)
 ) -> AsyncOpenAI:
