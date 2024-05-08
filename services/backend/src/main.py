@@ -11,6 +11,7 @@ from starlette.middleware.sessions import SessionMiddleware
 from src.settings import get_settings, Settings
 from src.shared import initialize_postgres
 from src.modules.events import event_router
+from src.modules.conversations import conversation_router
 from src.modules import * # SQL Models
 
 # Lifespan Events
@@ -46,7 +47,8 @@ fastapi.add_middleware(
 )
 
 # Module Routes
-fastapi.include_router(event_router)
+fastapi.include_router(router=event_router)
+fastapi.include_router(router=conversation_router)
 
 # Root Route
 @fastapi.get(path="/", response_model=dict[str, str])
