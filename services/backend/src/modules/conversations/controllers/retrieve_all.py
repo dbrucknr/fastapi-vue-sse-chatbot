@@ -7,22 +7,7 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 
 # Local Dependencies
 from src.shared import get_postgres_session
-from .models import Conversation, ConversationCreate
-
-###############################################################################
-# Create Conversation Handler
-###############################################################################
-async def create_new_conversation(
-    body: ConversationCreate,
-    postgres: AsyncSession = Depends(get_postgres_session)
-) -> Conversation:
-    # This will need to extract a user ID
-    conversation = Conversation(title=body.title, account_id=1)
-
-    postgres.add(instance=conversation)
-    await postgres.commit()
-    await postgres.refresh(instance=conversation)
-    return conversation
+from src.modules.conversations import Conversation
 
 ###############################################################################
 # Retrieve All Conversations Handler
@@ -38,13 +23,3 @@ async def retrieve_all_conversations(
         for conversation 
         in result
     ]
-
-async def update_one_conversation():
-    # Likely for title summarize
-    ...
-
-async def remove_one_conversation():
-    ...
-
-async def remove_all_conversations():
-    ...
