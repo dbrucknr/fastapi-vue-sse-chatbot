@@ -11,6 +11,9 @@ class Conversation(SQLModel, table=True):
     title: str | None = Field(default='New Chat')
     account_id: int | None = Field(default=None, foreign_key="account.id")
 
-class ConversationCreate(Conversation):
+class ConversationCreate(SQLModel):
     """Pydantic data-only model to create new Conversation instances"""
     pass
+
+class ConversationUpdate(SQLModel):
+    title: str

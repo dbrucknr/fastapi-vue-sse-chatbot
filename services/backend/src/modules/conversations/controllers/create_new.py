@@ -10,6 +10,7 @@ from src.modules.conversations import Conversation
 
 ###############################################################################
 # Create Conversation Handler
+# POST: https://dbrucknr.ngrok.io/conversations/create 
 ###############################################################################
 async def create_new_conversation(
     postgres: AsyncSession = Depends(dependency=get_postgres_session)

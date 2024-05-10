@@ -11,6 +11,7 @@ from src.modules.conversations import Conversation
 
 ###############################################################################
 # Retrieve All Conversations Handler
+# GET: https://dbrucknr.ngrok.io/conversations/
 ###############################################################################
 async def retrieve_all_conversations(
     postgres: AsyncSession = Depends(get_postgres_session)
