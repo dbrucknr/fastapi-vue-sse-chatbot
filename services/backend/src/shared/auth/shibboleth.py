@@ -10,7 +10,8 @@ oauth.register(
     server_metadata_url='https://shibboleth.umich.edu/.well-known/openid-configuration',
     client_kwargs = {
         'scope': 'openid info profile email address phone edumember'
-    }
+    },
+    token_endpoint_auth_method='client_secret_post'
 )
 
 shibboleth: StarletteOAuth2App = oauth.create_client('umich')
