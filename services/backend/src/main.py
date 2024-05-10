@@ -3,15 +3,15 @@ from typing import AsyncGenerator, Any
 from contextlib import asynccontextmanager
 
 # FastAPI Dependencies
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
 
 # Local Dependencies
-from src.settings import get_settings, Settings
 from src.shared import initialize_postgres
 from src.modules.events import event_router
 from src.modules.conversations import conversation_router
+from src.modules.accounts import account_router
 from src.modules import * # SQL Models
 
 # Lifespan Events
@@ -49,11 +49,11 @@ fastapi.add_middleware(
 # Module Routes
 fastapi.include_router(router=event_router)
 fastapi.include_router(router=conversation_router)
+fastapi.include_router(router=account_router)
 
 # Root Route
 @fastapi.get(path="/", response_model=dict[str, str])
-async def root(settings: Settings = Depends(get_settings)):
+async def root():
     return {
-        "api_key": settings.openai_api_key,
-        "api_org": settings.openai_api_org
+        "status": "ok"
     }
