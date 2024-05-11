@@ -32,3 +32,21 @@ services:
       - 127.0.0.1:${REDIS_PORT:-6379}:6379
     expose:
       - 6379
+
+  ngrok:
+    image: ngrok/ngrok:latest
+    restart: unless-stopped
+    command:
+      [
+        "start",
+        "--all",
+        "--config=/etc/ngrok.yml",
+        "--log=stdout"
+      ]
+    pull_policy: always
+    volumes:
+      - ./config/ngrok.yml:/etc/ngrok.yml:ro
+    ports:
+      - 127.0.0.1:4040:4040
+    depends_on:
+      - backend

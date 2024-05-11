@@ -8,9 +8,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
 
 # Local Dependencies
-from src.settings import get_settings, Settings
-from src.shared import initialize_postgres
+from src.shared import initialize_postgres, auth_router, verify_account
+
 from src.modules.events import event_router
+from src.modules.conversations import conversation_router
+
+# SQL Models
+from src.modules import *
+from src.shared.auth.models import *
 
 # Lifespan Events
 @asynccontextmanager
@@ -45,12 +50,16 @@ fastapi.add_middleware(
 )
 
 # Module Routes
-fastapi.include_router(event_router)
+fastapi.include_router(router=event_router)
+fastapi.include_router(router=conversation_router)
+fastapi.include_router(router=auth_router)
 
 # Root Route
 @fastapi.get(path="/", response_model=dict[str, str])
-async def root(settings: Settings = Depends(get_settings)):
+async def root(
+    account: Account = Depends(verify_account)
+):
+    print(account)
     return {
-        "api_key": settings.openai_api_key,
-        "api_org": settings.openai_api_org
+        "status": "ok"
     }
