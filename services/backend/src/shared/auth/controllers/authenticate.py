@@ -10,8 +10,8 @@ from authlib.integrations.starlette_client import OAuthError
 
 # Local Dependencies
 from src.shared import get_postgres_session
-from src.modules.accounts.types import UserInfo
-from src.modules.accounts import AccountRead, Account
+from src.shared.auth.types import UserInfo
+from src.shared.auth.models import AccountRead, Account
 from src.shared.auth.shibboleth import shibboleth
 
 # https://github.com/SogoKato/oidc-fastapi-authlib/blob/main/backend/main.py

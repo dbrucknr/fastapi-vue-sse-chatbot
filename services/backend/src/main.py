@@ -3,16 +3,19 @@ from typing import AsyncGenerator, Any
 from contextlib import asynccontextmanager
 
 # FastAPI Dependencies
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
 
 # Local Dependencies
-from src.shared import initialize_postgres
+from src.shared import initialize_postgres, auth_router, verify_account
+
 from src.modules.events import event_router
 from src.modules.conversations import conversation_router
-from src.modules.accounts import account_router
-from src.modules import * # SQL Models
+
+# SQL Models
+from src.modules import *
+from src.shared.auth.models import *
 
 # Lifespan Events
 @asynccontextmanager
@@ -49,11 +52,14 @@ fastapi.add_middleware(
 # Module Routes
 fastapi.include_router(router=event_router)
 fastapi.include_router(router=conversation_router)
-fastapi.include_router(router=account_router)
+fastapi.include_router(router=auth_router)
 
 # Root Route
 @fastapi.get(path="/", response_model=dict[str, str])
-async def root():
+async def root(
+    account: Account = Depends(verify_account)
+):
+    print(account)
     return {
         "status": "ok"
     }
