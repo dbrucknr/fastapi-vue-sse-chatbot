@@ -20,7 +20,11 @@ async def retrieve_all_conversations(
     query = select(Conversation)
     result = await postgres.exec(statement=query)
     return [
-        Conversation(id=conversation.id, title=conversation.title) 
+        Conversation(
+            id=conversation.id, 
+            title=conversation.title,
+            account_id=conversation.account_id
+        ) 
         for conversation 
         in result
     ]

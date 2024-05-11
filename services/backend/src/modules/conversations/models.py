@@ -17,3 +17,5 @@ class ConversationCreate(SQLModel):
 
 class ConversationUpdate(SQLModel):
     title: str
+    account_id: int
+    pass
