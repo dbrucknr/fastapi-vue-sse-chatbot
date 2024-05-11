@@ -13,4 +13,5 @@ class Conversation(SQLModel, table=True):
 
 class ConversationCreate(Conversation):
     """Pydantic data-only model to create new Conversation instances"""
+    account_id: int
     pass
